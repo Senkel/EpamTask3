@@ -42,6 +42,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Interfaces\IClearEventHandlers.cs" />
+    <Compile Include="Interfaces\IPort.cs" />
+    <Compile Include="Interfaces\IStation.cs" />
+    <Compile Include="Interfaces\ITerminal.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
