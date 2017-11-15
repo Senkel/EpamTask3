@@ -9,6 +9,12 @@ namespace EpamTask3.Classes
 {
     class Terminal : ITerminal
     {
+        public Terminal(PhoneNumber number)
+        {
+            Number = number;
+        }
+
+        public PhoneNumber Number { get; private set; }
 
         public bool IsOnline { get; private set; }
 
@@ -24,7 +30,10 @@ namespace EpamTask3.Classes
 
         public void ClearEvents()
         {
-            throw new NotImplementedException();
+            this.Online = null;
+            this.Offline = null;
+            this.Plugging = null;   
+            this.UnPlugging = null;
         }
 
         public void Drop()

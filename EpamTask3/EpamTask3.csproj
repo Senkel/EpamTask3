@@ -42,9 +42,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Classes\CallInfo.cs" />
+    <Compile Include="Classes\Calls.cs" />
+    <Compile Include="Classes\IncomingCalls.cs" />
+    <Compile Include="Classes\OutGoingCalls.cs" />
     <Compile Include="Classes\PhoneNumber.cs" />
     <Compile Include="Classes\Port.cs" />
     <Compile Include="Classes\PortStatus.cs" />
+    <Compile Include="Classes\Respond.cs" />
+    <Compile Include="Classes\RespondCondition.cs" />
     <Compile Include="Classes\Station.cs" />
     <Compile Include="Classes\Terminal.cs" />
     <Compile Include="Interfaces\IClearEventHandlers.cs" />
