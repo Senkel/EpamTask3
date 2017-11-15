@@ -42,6 +42,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Classes\PhoneNumber.cs" />
+    <Compile Include="Classes\Port.cs" />
+    <Compile Include="Classes\PortStatus.cs" />
+    <Compile Include="Classes\Station.cs" />
+    <Compile Include="Classes\Terminal.cs" />
     <Compile Include="Interfaces\IClearEventHandlers.cs" />
     <Compile Include="Interfaces\IPort.cs" />
     <Compile Include="Interfaces\IStation.cs" />
