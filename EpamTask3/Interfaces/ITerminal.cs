@@ -1,4 +1,5 @@
-﻿using System;
+﻿using EpamTask3.Classes;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -16,6 +17,14 @@ namespace EpamTask3.Interfaces
 
         event EventHandler UnPlugging; // when user unplug the device
 
+        event EventHandler<OutGoingCalls> OutgoingConnection; // when the terminal try to connect to the station
+
+        event EventHandler<IncomingCalls> IncomingRequest;//  when station try to connect to terminal
+
+        event EventHandler<IncomingCalls> IncomingRespond; // when terminal send respond to the station
+
+        PhoneNumber Number { get; }
+
         void Drop();
 
         void Answer();
@@ -25,5 +34,7 @@ namespace EpamTask3.Interfaces
         void Unplug();
 
         void RegisterEventHandlersForPort(IPort port);
+
+        void IncomingCallFrom(PhoneNumber source);
     }
 }

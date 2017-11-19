@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace EpamTask3.Classes
 {
-    class Respond:Calls
+    class Respond:IncomingCalls
     {
-        public Calls Request;
+        public IncomingCalls Request;
 
-        public PhoneNumber Source { get; set; }
+       // public PhoneNumber Source { get; set; }
 
         public RespondCondition Condition { get; set; }
     }

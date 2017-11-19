@@ -43,7 +43,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Classes\CallInfo.cs" />
-    <Compile Include="Classes\Calls.cs" />
     <Compile Include="Classes\IncomingCalls.cs" />
     <Compile Include="Classes\OutGoingCalls.cs" />
     <Compile Include="Classes\PhoneNumber.cs" />
@@ -62,6 +61,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="ClassDiagram1.cd" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -9,41 +9,41 @@ namespace EpamTask3.Classes
 {
     class Port : IPort
     {
-        private PortStatus _status;
+        private PortCondition _condition;
 
-        public PortStatus Status
+        public PortCondition Condition
         {
-            get { return _status; }
+            get { return _condition; }
 
             set
             {
-                if (_status != value)
+                if (_condition != value)
                 {
-                    StatusChanging(this, value);
-                    _status = value;
-                    StatusChanged(this, _status);
+                    ConditionChanging(this, value);
+                    _condition = value;
+                    ConditionChanged(this, _condition);
                 }
             }
         }
 
-        public event EventHandler<PortStatus> StatusChanged;
+        public event EventHandler<PortCondition> ConditionChanged;
 
-        private void OnStatusChnged(object sender, PortStatus status)
+        private void OnStatusChanged(object sender, PortCondition condition)
         {
-            StatusChanged?.Invoke(sender, status);
+            ConditionChanged?.Invoke(sender, condition);
         }
 
-        public event EventHandler<PortStatus> StatusChanging;
+        public event EventHandler<PortCondition> ConditionChanging;
 
-        private void OnStatusChnging(object sender, PortStatus newStatus)
+        private void OnStatusChanging(object sender, PortCondition newStatus)
         {
-            StatusChanging?.Invoke(sender, newStatus);
+            ConditionChanging?.Invoke(sender, newStatus);
         }
 
         public void ClearEvents()
         {
-            StatusChanged = null;
-            StatusChanging = null;
+            ConditionChanged = null;
+            ConditionChanging = null;
         }
 
         public void RegisterEventHandlersForTerminal(ITerminal terminal)

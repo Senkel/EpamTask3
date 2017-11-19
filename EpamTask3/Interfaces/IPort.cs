@@ -1,4 +1,5 @@
-﻿using System;
+﻿using EpamTask3.Classes;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,6 +9,11 @@ namespace EpamTask3.Interfaces
 {
     interface IPort:IClearEventHandlers
     {
-         void RegisterEventHandlersForTerminal(ITerminal terminal);
+         PortCondition Condition { get; set; }
+
+        event EventHandler<PortCondition> ConditionChanging;
+        event EventHandler<PortCondition> ConditionChanged;
+
+        void RegisterEventHandlersForTerminal(ITerminal terminal);
     }
 }

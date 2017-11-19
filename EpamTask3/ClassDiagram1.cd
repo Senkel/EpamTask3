@@ -1,0 +1,106 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="EpamTask3.Classes.CallInfo" Collapsed="true">
+    <Position X="7.75" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAgACAAAAAAAAACAAAAAAAAQAAAAAAAAAAAA=</HashCode>
+      <FileName>Classes\CallInfo.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EpamTask3.Classes.IncomingCalls" Collapsed="true">
+    <Position X="6" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Classes\IncomingCalls.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EpamTask3.Classes.OutGoingCalls" Collapsed="true">
+    <Position X="8" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Classes\OutGoingCalls.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EpamTask3.Classes.PhoneNumber" Collapsed="true">
+    <Position X="2" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAABAAAAAAAAAAAEgAAAAAAAAAAAAIAAAAAAAAAAAAA=</HashCode>
+      <FileName>Classes\PhoneNumber.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="EpamTask3.Classes.Port" Collapsed="true">
+    <Position X="1.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAABCAAAAAAAAAAAAAAAgAAAAEAAEgAAAIAAA=</HashCode>
+      <FileName>Classes\Port.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="EpamTask3.Classes.Respond" Collapsed="true">
+    <Position X="4.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAACAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Classes\Respond.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="EpamTask3.Classes.Station" Collapsed="true">
+    <Position X="3" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAAAgAAAAAQAAAAAAARAAAAAAgAKCEAAABAICICAA=</HashCode>
+      <FileName>Classes\Station.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="EpamTask3.Classes.Terminal" Collapsed="true">
+    <Position X="0.5" Y="1" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACAAQAAAAAAUYAAQAEiAEAAAQACAgBQEBgAAAwBAAAA=</HashCode>
+      <FileName>Classes\Terminal.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Interface Name="EpamTask3.Interfaces.IClearEventHandlers" Collapsed="true">
+    <Position X="8.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAA=</HashCode>
+      <FileName>Interfaces\IClearEventHandlers.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="EpamTask3.Interfaces.IPort" Collapsed="true">
+    <Position X="6.5" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAABCAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAA=</HashCode>
+      <FileName>Interfaces\IPort.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="EpamTask3.Interfaces.IStation" Collapsed="true">
+    <Position X="4.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAIAAA=</HashCode>
+      <FileName>Interfaces\IStation.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="EpamTask3.Interfaces.ITerminal" Collapsed="true">
+    <Position X="4.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACAAAAAAAAAUQAAQAEiAEAAAAAAAgAQABgAAAgAAAAA=</HashCode>
+      <FileName>Interfaces\ITerminal.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Enum Name="EpamTask3.Classes.PortCondition" Collapsed="true">
+    <Position X="1.25" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAI=</HashCode>
+      <FileName>Classes\PortStatus.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="EpamTask3.Classes.RespondCondition" Collapsed="true">
+    <Position X="6.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Classes\RespondCondition.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace EpamTask3.Classes
 {
-    enum PortStatus
+    enum PortCondition
     {
-        Free, Busy, Plagged, Unplagged
+        Free, Busy, Unplagged
     }
 }
