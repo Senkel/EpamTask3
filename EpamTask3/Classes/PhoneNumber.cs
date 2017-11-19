@@ -9,6 +9,8 @@ namespace EpamTask3.Classes
     class PhoneNumber: IEquatable<PhoneNumber>
     {
         private string _phoneNumber;
+
+        public string Phone { get; set; }
         
         public PhoneNumber(string phoneNumber)
         {

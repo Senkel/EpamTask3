@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace EpamTask3.Classes
 {
-    class OutGoingCalls
+    class OutGoingCalls:Calls
     {
         public PhoneNumber Target { get; set; }
     }

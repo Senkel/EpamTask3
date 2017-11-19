@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 
 namespace EpamTask3.Classes
 {
-    class IncomingCalls :Calls
+    class Calls
     {
-
+        public PhoneNumber Source { get; set; }
     }
 }

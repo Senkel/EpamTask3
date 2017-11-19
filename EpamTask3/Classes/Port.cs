@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace EpamTask3.Classes
 {
-    class Port : IPort
+    abstract class Port : IPort
     {
         private PortCondition _condition;
 
@@ -19,9 +19,9 @@ namespace EpamTask3.Classes
             {
                 if (_condition != value)
                 {
-                    ConditionChanging(this, value);
+                    OnStatusChanging(this, value);
                     _condition = value;
-                    ConditionChanged(this, _condition);
+                   OnStatusChanged(this, _condition);
                 }
             }
         }
@@ -46,9 +46,7 @@ namespace EpamTask3.Classes
             ConditionChanging = null;
         }
 
-        public void RegisterEventHandlersForTerminal(ITerminal terminal)
-        {
-            throw new NotImplementedException();
-        }
+        public abstract void RegisterEventHandlersForTerminal(ITerminal terminal);
+
     }
 }

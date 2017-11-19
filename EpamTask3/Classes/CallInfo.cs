@@ -12,7 +12,9 @@ namespace EpamTask3.Classes
 
         public PhoneNumber Target { get; set; }
 
-        public DateTime DateTime { get; set; }
+        public DateTime Started { get; set; }
+        
+        public DateTime Ended { get; set; }
 
         public TimeSpan Duration { get; set; }
     }

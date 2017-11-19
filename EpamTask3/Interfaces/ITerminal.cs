@@ -17,13 +17,15 @@ namespace EpamTask3.Interfaces
 
         event EventHandler UnPlugging; // when user unplug the device
 
-        event EventHandler<OutGoingCalls> OutgoingConnection; // when the terminal try to connect to the station
+        event EventHandler<Calls> OutgoingConnection; // when the terminal try to connect to the station
 
         event EventHandler<IncomingCalls> IncomingRequest;//  when station try to connect to terminal
 
-        event EventHandler<IncomingCalls> IncomingRespond; // when terminal send respond to the station
+        event EventHandler<Respond> IncomingRespond; // when terminal send respond to the station
 
         PhoneNumber Number { get; }
+
+        void Call(PhoneNumber target);
 
         void Drop();
 

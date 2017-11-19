@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace EpamTask3.Classes
 {
-    class Terminal : ITerminal
+    abstract class Terminal : ITerminal
     {
         public Terminal(PhoneNumber number)
         {
@@ -18,21 +18,21 @@ namespace EpamTask3.Classes
 
         public bool IsOnline { get; private set; }
 
-        public IncomingCalls IncomingCall { get; set; }
+        public Calls IncomingCall { get; set; }
 
         public event EventHandler Online;
         public event EventHandler Offline;
         public event EventHandler Plugging;
         public event EventHandler UnPlugging;
-        public event EventHandler<OutGoingCalls> OutgoingConnection;
+        public event EventHandler<Calls> OutgoingConnection;
         public event EventHandler<IncomingCalls> IncomingRequest;
-        public event EventHandler<IncomingCalls> IncomingRespond;
+        public event EventHandler<Respond> IncomingRespond;
 
         public void Answer()
         {
             if (!IsOnline && IncomingCall != null)
             {
-                OnIncomingRespond(this, new Respond() { Source = Number, Condition = RespondCondition.Accept, Request = IncomingCall });
+                OnIncomingRespond(this, new Respond() { Source = Number, Condition = RespondCondition.Accept, Request = (IncomingCalls)IncomingCall });
                 OnOnline(this, null);
             }
         }
@@ -60,7 +60,7 @@ namespace EpamTask3.Classes
             this.IncomingRespond = null;
             this.OutgoingConnection = null;
         }
-        
+
         public void OnPlugging(object sender, EventArgs args)
         {
             Plugging?.Invoke(sender, args);
@@ -70,7 +70,7 @@ namespace EpamTask3.Classes
         {
             OnPlugging(this, null);
         }
-        
+
         public void OnUnPlugging(object sender, EventArgs args)
         {
             UnPlugging?.Invoke(sender, args);
@@ -97,24 +97,49 @@ namespace EpamTask3.Classes
         {
             if (OutgoingConnection != null)
             {
-                IncomingCall = new IncomingCalls() { Source = this.Number, Target = target };
+                IncomingCall = new OutGoingCalls() { Source = this.Number, Target = target };
                 OutgoingConnection(sender, IncomingCall);
             }
         }
 
         public void RegisterEventHandlersForPort(IPort port)
         {
-            throw new NotImplementedException();
+            port.ConditionChanged += (sender, state) =>
+            {
+                if (IsOnline && state == PortCondition.Free)
+                {
+                    OnOffline(sender, null);
+                }
+            };
+        }
+
+        protected virtual void OnOffline(object sender, EventArgs args)
+        {
+            if (Offline != null)
+            {
+                Offline(sender, args);
+                IncomingCall = null;
+            }
+            IsOnline = false;
         }
 
         public void Drop()
         {
-            throw new NotImplementedException();
+            if (IsOnline)
+            {
+                OnOffline(this, null);
+            }
+        }
+
+        protected virtual void OnIncomingRequest(object sender, IncomingCalls request)
+        {
+            IncomingRequest?.Invoke(sender, request);
+            IncomingCall = request;
         }
 
         public void IncomingCallFrom(PhoneNumber source)
         {
-            throw new NotImplementedException();
+           OnIncomingRequest(this, new IncomingCalls() { Source = source });
         }
     }
 }
