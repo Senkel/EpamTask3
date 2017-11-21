@@ -43,6 +43,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Classes\Billing.cs" />
+    <Compile Include="Classes\BillingInfo.cs" />
     <Compile Include="Classes\CallInfo.cs" />
     <Compile Include="Classes\Calls.cs" />
     <Compile Include="Classes\IncomingCalls.cs" />

@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace EpamTask3.Classes
 {
-    class PhoneNumber: IEquatable<PhoneNumber>
+   public struct PhoneNumber: IEquatable<PhoneNumber>
     {
         private string _phoneNumber;
 
-        public string Phone { get; set; }
+        public string Phone { get { return _phoneNumber; } }
         
         public PhoneNumber(string phoneNumber)
         {
@@ -19,7 +19,7 @@ namespace EpamTask3.Classes
 
         public override string ToString()
         {
-            return _phoneNumber;
+            return Phone;
         }
 
         public override bool Equals(object o)
@@ -34,6 +34,16 @@ namespace EpamTask3.Classes
         public bool Equals(PhoneNumber other)
         {
             return _phoneNumber == other._phoneNumber;
+        }
+
+        public static bool operator ==(PhoneNumber p1, PhoneNumber p2)
+        {
+            return (p1 as IEquatable<PhoneNumber>).Equals(p2);
+        }
+
+        public static bool operator !=(PhoneNumber p1, PhoneNumber p2)
+        {
+            return !(p1 == p2);
         }
 
         public override int GetHashCode()

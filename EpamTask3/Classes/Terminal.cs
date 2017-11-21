@@ -37,6 +37,18 @@ namespace EpamTask3.Classes
             }
         }
 
+        public void Drop()
+        {
+            if (IncomingCall != null)
+            {
+                OnIncomingRespond(this, new Respond() { Source = Number, Condition = RespondCondition.Reset });
+                if (IsOnline)
+                {
+                    OnOffline(this, null);
+                }
+            }
+        }
+
         private void OnOnline(object sender, EventArgs args)
         {
             Online?.Invoke(sender, args);
@@ -44,10 +56,9 @@ namespace EpamTask3.Classes
 
         private void OnIncomingRespond(object sender, Respond respond)
         {
-            if (this.IncomingRespond != null && IncomingCall != null)
-            {
-                this.IncomingRespond(sender, respond);
-            }
+            if (IncomingRespond != null && IncomingCall != null)
+                IncomingRespond(sender, respond);
+
         }
 
         public void ClearEvents()
@@ -80,6 +91,7 @@ namespace EpamTask3.Classes
         {
             if (IsOnline)
             {
+                Drop();
                 OnUnPlugging(this, null);
             }
         }
@@ -104,9 +116,9 @@ namespace EpamTask3.Classes
 
         public void RegisterEventHandlersForPort(IPort port)
         {
-            port.ConditionChanged += (sender, state) =>
+            port.ConditionChanged += (sender, condition) =>
             {
-                if (IsOnline && state == PortCondition.Free)
+                if (IsOnline && condition == PortCondition.Free)
                 {
                     OnOffline(sender, null);
                 }
@@ -123,14 +135,6 @@ namespace EpamTask3.Classes
             IsOnline = false;
         }
 
-        public void Drop()
-        {
-            if (IsOnline)
-            {
-                OnOffline(this, null);
-            }
-        }
-
         protected virtual void OnIncomingRequest(object sender, IncomingCalls request)
         {
             IncomingRequest?.Invoke(sender, request);
@@ -139,7 +143,7 @@ namespace EpamTask3.Classes
 
         public void IncomingCallFrom(PhoneNumber source)
         {
-           OnIncomingRequest(this, new IncomingCalls() { Source = source });
+            OnIncomingRequest(this, new IncomingCalls() { Source = source });
         }
     }
 }

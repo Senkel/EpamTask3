@@ -9,13 +9,16 @@ namespace EpamTask3.MTS.Tariffs
 {
     class Ultra : TariffPlan
     {
-        public Ultra(string name, string description, int cost) : base(name, description, cost)
+        private decimal Cost { get; set; }
+
+        public Ultra(string name, string description,int cost) : base(name, description)
         {
+            Cost = cost;
         }
 
-        public override int GetCost(int time)
+        public override decimal GetCost(DateTime start, DateTime end)
         {
-            return time * Cost;
+            return Cost;
         }
     }
 }

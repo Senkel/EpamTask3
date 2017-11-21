@@ -1,4 +1,5 @@
-﻿using System;
+﻿using EpamTask3.Classes;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,7 +11,8 @@ namespace EpamTask3.Interfaces
     {
         string Name { get; }
         string Description { get;}
-        int Cost { get; }
+        
+        decimal GetCost(DateTime start, DateTime end);
 
     }
 }

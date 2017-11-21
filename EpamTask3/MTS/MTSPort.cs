@@ -25,7 +25,7 @@ namespace EpamTask3.MTS
         public override void RegisterEventHandlersForTerminal(ITerminal terminal)
         {
             terminal.Plugging += (port, args) => { Condition = PortCondition.Free; };
-            terminal.UnPlugging += (port, args) => { Condition = PortCondition.Free; };
+            terminal.UnPlugging += (port, args) => { Condition = PortCondition.Unplagged; };
             terminal.OutgoingConnection += OnOutgoingCall;
 
         }

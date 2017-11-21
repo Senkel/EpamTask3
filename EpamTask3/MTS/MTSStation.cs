@@ -14,14 +14,21 @@ namespace EpamTask3.MTS
         {
         }
 
+
+        public void OnOutgoingRequest(object sender, Calls request)
+        {
+            if (request.GetType() == typeof(OutGoingCalls))
+            {
+                RegisterOutgoingRequest(request as OutGoingCalls);
+            }
+        }
+
+        public override void RegisterEventHandlersForBilling(Billing billing)
+        {
+            billing.TerminalRegistered += (sender, terminal) => { Add(terminal); };
+        }
+
         
-        //public void OnOutgoingRequest(object sender,Calls request)
-        //{
-        //    if (request.GetType() == typeof(OutGoingCalls))
-        //    {
-        //        RegisterOutgoingRequest(request as OutGoingCalls);
-        //    }
-        //}
 
         public override void RegisterEventHandlersForPort(IPort port)
         {
@@ -31,7 +38,7 @@ namespace EpamTask3.MTS
 
         public override void RegisterEventHandlersForTerminal(ITerminal terminal)
         {
-           // terminal.OutgoingConnection += OnOutgoingRequest;
+            terminal.OutgoingConnection += OnOutgoingRequest;
             terminal.IncomingRespond += OnIncomingCallRespond;
         }
     }

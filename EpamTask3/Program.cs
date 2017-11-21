@@ -14,31 +14,47 @@ namespace EpamTask3
     {
         static void Main(string[] args)
         {
-            Billing billing = new Billing(); 
-            List<IPort> ports = new List<IPort>() { new MTSPort(), new MTSPort() };
-            List<ITerminal> terminals = new List<ITerminal>();
+            
+            List<IPort> ports = new List<IPort>() { new MTSPort(), new MTSPort(), new MTSPort(), new MTSPort(), new MTSPort() };
+            List<ITerminal> terminals = new List<ITerminal>() { };
             MTSStation mts = new MTSStation(ports, terminals);
+            Billing billing = new Billing(mts);
+            List<Billing> bil = new List<Billing>();
 
-            var phN1 = new PhoneNumber("1234567");
-            var phN2 = new PhoneNumber("7654321");
-
-           
-
-            var absolute= new Absolute ("Absolute", "", 10);
+            var absolute = new Absolute("Absolute", "", 10);
             var ultra = new Ultra("Ultra", "", 15);
 
 
-            billing.AddTerminal(phN1, ultra);
-            billing.AddTerminal(phN2, absolute);    
+            var p0 = new PhoneNumber("12-345-67");
+            var p2 = new PhoneNumber("76-543-21");
+            var p3 = new PhoneNumber("9327996");
+           
+
+            
+
+            
+            billing.AddTerminal(p0, ultra);
+            billing.AddTerminal(p2, absolute);    
             foreach (var terminal in terminals)
             {
                 terminal.Plug();
             }
 
-            terminals[0].Call(new PhoneNumber("1234567"));
+            terminals[0].Call(new PhoneNumber("76-543-21"));
+
             terminals[1].Answer();
-            terminals[0].Drop();
+
             
+
+            terminals[0].Drop();
+
+            foreach (var b in bil)
+            {
+                Console.WriteLine(b.GetCallInfoForPeriod(p0, new DateTime(2017, 11, 20, 16, 58, 52), DateTime.Now));
+            }
+
+            var billingInfo = billing.GetCallInfoForPeriod(p0, new DateTime(2017, 11, 20, 16, 58, 52), DateTime.Now);
+
             Console.ReadKey();
         }
     }

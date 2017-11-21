@@ -1,4 +1,5 @@
-﻿using System;
+﻿using EpamTask3.Classes;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,5 +12,11 @@ namespace EpamTask3.Interfaces
         void RegisterEventHandlersForTerminal(ITerminal terminal);
 
         void RegisterEventHandlersForPort(IPort port);
+
+        event EventHandler<CallInfo> NewCallInfo;
+
+        event EventHandler<ITerminal> TerminalRegistered;
+
+        void RegisterEventHandlersForBilling(Billing billing);
     }
 }

@@ -9,11 +9,11 @@ namespace EpamTask3.Classes
 {
     abstract class Station : IStation
     {
-        ICollection<CallInfo> _connectionCollection;
-        ICollection<ITerminal> _terminalCollection;
-        ICollection<IPort> _portCollection;
-        ICollection<CallInfo> _callCollection;
-        IDictionary<PhoneNumber, IPort> _callMapping;
+       private ICollection<CallInfo> _connectionCollection;
+       private ICollection<ITerminal> _terminalCollection;
+       private ICollection<IPort> _portCollection;
+       private ICollection<CallInfo> _callCollection;
+       private IDictionary<PhoneNumber, IPort> _callMapping;
 
         public Station(ICollection<IPort> portCollection, ICollection<ITerminal> terminalCollection)
         {
@@ -24,35 +24,41 @@ namespace EpamTask3.Classes
             _connectionCollection = new List<CallInfo>();
         }
 
-        public ITerminal GetTerminalByPhoneNumber(PhoneNumber number)
+        protected ITerminal GetTerminalByPhoneNumber(PhoneNumber number)
         {
             return _terminalCollection.FirstOrDefault(x => x.Number == number);
         }
 
         public IPort GetPortByPhoneNumber(PhoneNumber number)
         {
-            return _callMapping[number];
+            var t = _callMapping.TryGetValue(number, out IPort port);
+            return port;
         }
 
         public void RegisterOutgoingRequest(OutGoingCalls outGoingCalls)
         {
-            if (outGoingCalls.Target != default(PhoneNumber) && outGoingCalls.Source != default(PhoneNumber))
+            if (outGoingCalls.Target != default(PhoneNumber) && outGoingCalls.Source != default(PhoneNumber) && (GetCallInfo(outGoingCalls.Source) == null && GetConnectionInfo(outGoingCalls.Source) == null))
             {
+                var time = DateTime.Now;
                 var callinfo = new CallInfo()
                 {
                     Source = outGoingCalls.Source,
                     Target = outGoingCalls.Target,
-                    Started = DateTime.Now
+                    Started = time,
+                    Ended = time
                 };
 
                 ITerminal targetTerminal = GetTerminalByPhoneNumber(outGoingCalls.Target);
                 IPort targetPort = GetPortByPhoneNumber(outGoingCalls.Target);
 
-                if (targetPort.Condition == PortCondition.Free)
+                if (targetPort != null && targetPort.Condition == PortCondition.Free)
                 {
                     _connectionCollection.Add(callinfo);
                     targetPort.Condition = PortCondition.Busy;
+                    targetTerminal.IncomingCallFrom(outGoingCalls.Source);
                 }
+                else
+                    OnNewCallInfo(this, callinfo);
             }
         }
 
@@ -75,9 +81,11 @@ namespace EpamTask3.Classes
                 MapTerminalToPort(terminal, portFree);
                 RegisterEventHandlersForPort(portFree);
                 RegisterEventHandlersForTerminal(terminal);
+                OnTerminalRegistered(this, terminal);
             }
 
         }
+
         private void UnMapTerminalToPort(ITerminal terminal, IPort port)
         {
             _callMapping.Remove(terminal.Number);
@@ -86,6 +94,13 @@ namespace EpamTask3.Classes
         }
 
         public event EventHandler<CallInfo> NewCallInfo;//  when the station creates a new CallInfo for billing 
+
+        public event EventHandler<ITerminal> TerminalRegistered;
+
+        protected virtual void OnTerminalRegistered(object sender, ITerminal terminal)
+        {
+            TerminalRegistered?.Invoke(sender, terminal);
+        }
 
         protected virtual void OnNewCallInfo(object sender, CallInfo callInfo)
         {
@@ -97,14 +112,6 @@ namespace EpamTask3.Classes
             _callCollection.Remove(callInfo);
             callInfo.Started = DateTime.Now;
             _callCollection.Add(callInfo);
-        }
-
-        protected void InterruptActiveCall(CallInfo callInfo)
-        {
-            callInfo.Duration = DateTime.Now - callInfo.Started;
-            _callCollection.Remove(callInfo);
-            OnNewCallInfo(this, callInfo);
-            SetPortConditionWhenConnectionInterrupted(callInfo.Source, callInfo.Target);
         }
 
         protected void InterruptConnection(CallInfo callInfo)
@@ -134,12 +141,12 @@ namespace EpamTask3.Classes
 
         protected CallInfo GetConnectionInfo(PhoneNumber number)
         {
-            return _callCollection.FirstOrDefault(x => (x.Source.Phone == number.Phone || x.Target.Phone== number.Phone));
+            return _callCollection.FirstOrDefault(x => (x.Source.Phone == number.Phone || x.Target.Phone == number.Phone));
         }
 
-        protected CallInfo GetCallInfo(PhoneNumber actor)
+        protected CallInfo GetCallInfo(PhoneNumber num)
         {
-            return _callCollection.FirstOrDefault(x => (x.Source.Phone == actor.Phone || x.Target.Phone == actor.Phone));
+            return _callCollection.FirstOrDefault(x => (x.Source.Phone == num.Phone || x.Target.Phone == num.Phone));
         }
 
         public void OnIncomingCallRespond(object sender, Respond respond)
@@ -166,15 +173,16 @@ namespace EpamTask3.Classes
                 CallInfo currentCallInfo = GetCallInfo(respond.Source);
                 if (currentCallInfo != null)
                 {
-                    InterruptActiveCall(currentCallInfo);
+                    InterruptConnection(currentCallInfo);
                 }
             }
         }
+
+        public abstract void RegisterEventHandlersForBilling(Billing billing);
 
         public void ClearEvents()
         {
             NewCallInfo = null;
         }
-
     }
 }
