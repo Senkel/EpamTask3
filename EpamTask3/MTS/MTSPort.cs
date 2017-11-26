@@ -10,11 +10,6 @@ namespace EpamTask3.MTS
 {
     class MTSPort : Port
     {
-        public MTSPort()
-        {
-           ConditionChanged += (sender, condition) => { Console.WriteLine("Port detected the State is changed to {0}", condition); };
-        }
-
         public void OnOutgoingCall(object sender, Calls calls)
         {
             if (calls.GetType() == typeof(OutGoingCalls) && Condition == PortCondition.Free)
@@ -22,12 +17,18 @@ namespace EpamTask3.MTS
                 Condition = PortCondition.Busy;
             }
         }
+
         public override void RegisterEventHandlersForTerminal(ITerminal terminal)
         {
             terminal.Plugging += (port, args) => { Condition = PortCondition.Free; };
             terminal.UnPlugging += (port, args) => { Condition = PortCondition.Unplagged; };
             terminal.OutgoingConnection += OnOutgoingCall;
 
+        }
+
+        public MTSPort()
+        {
+            ConditionChanged += (sender, condition) => { Console.WriteLine("Port detected the State is changed to {0}", condition); };
         }
     }
 }

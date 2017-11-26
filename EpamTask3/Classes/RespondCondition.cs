@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace EpamTask3.Classes
 {
-    enum RespondCondition
+   public enum RespondCondition
     {
         Accept, Reset
     }

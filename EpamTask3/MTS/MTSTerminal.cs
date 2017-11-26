@@ -18,11 +18,13 @@ namespace EpamTask3.MTS
             OutgoingConnection += (sender, args) => { Console.WriteLine("Terminal {0} OutgoingConnection", Number); };
 
             IncomingRequest += OnIncomingRequests;
-            IncomingRespond += (sender, args) => { Console.WriteLine("Terminal {0} IncomingRespond", Number); };
+            //IncomingRespond += (sender, args) => { Console.WriteLine("Terminal {0} IncomingRespond", Number); };
 
             Online += (sender, args) => { Console.WriteLine("Terminal {0} turned to online mode", Number); };
 
             Offline += (sender, args) => { Console.WriteLine("Terminal {0} turned to offline mode", Number); };
+
+
         }
 
         public void OnIncomingRequests(object sender, IncomingCalls request)

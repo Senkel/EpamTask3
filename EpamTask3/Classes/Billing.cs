@@ -18,20 +18,20 @@ namespace EpamTask3.Classes
             _repositiryOfBillingInfo = new List<BillingInfo>();
             _repositoryOfTerminalTarifPlan = new Dictionary<PhoneNumber, Dictionary<ITariffPlan, DateTime>>();
             station.RegisterEventHandlersForBilling(this);
-            //RegisterEventHandlersForStation(station);
+            RegisterEventHandlersForStation(station);
         }
 
-        public Dictionary<ITariffPlan, DateTime> GetTariffs(PhoneNumber number)
-        {
-            var tmp = new Dictionary<ITariffPlan, DateTime>();
-            if (_repositoryOfTerminalTarifPlan.TryGetValue(number, out tmp))
-                return tmp;
-            else return null;
-        }
+        //public Dictionary<ITariffPlan, DateTime> GetTariffs(PhoneNumber number)
+        //{
+        //    var tmp = new Dictionary<ITariffPlan, DateTime>();
+        //    if (_repositoryOfTerminalTarifPlan.TryGetValue(number, out tmp))
+        //        return tmp;
+        //    else return null;
+        //}
 
         public ITariffPlan GetTariff(PhoneNumber number, DateTime date)
         {
-            var tariffs = GetTariffs(number);
+            var tariffs = new Dictionary<ITariffPlan, DateTime>();
             var tmp = tariffs.Where(x => x.Value <= date).OrderByDescending(x => x.Value).LastOrDefault();
             return tmp.Key;
         }
@@ -68,9 +68,44 @@ namespace EpamTask3.Classes
             }
         }
 
+        public bool ChangeTariff(PhoneNumber number, ITariffPlan tariff)
+        {
+            if (_repositoryOfTerminalTarifPlan.TryGetValue(number, out Dictionary<ITariffPlan, DateTime> tariffHistory))
+            {
+                var lastChange = tariffHistory.LastOrDefault().Value;
+                if (((DateTime.Now.Year - lastChange.Year) * 12 + (DateTime.Now.Month - lastChange.Month)) < 1)
+                {
+                    tariffHistory.Add(tariff, DateTime.Now);
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        public ICollection<BillingInfo> GetDurationInfo(PhoneNumber number, DateTime start, DateTime end)
+        {
+            return _repositiryOfBillingInfo.Where(x => x.Source == number && x.Duration == end - start).ToList();
+        }
+
+        public ICollection<BillingInfo> GetCostInfo(PhoneNumber number, TariffPlan tariffPlan,DateTime start,DateTime end)
+        {
+            return _repositiryOfBillingInfo.Where(x => x.Source == number && x.Cost == tariffPlan.GetCost(start, end)).ToList();
+        }
+
         public ICollection<BillingInfo> GetCallInfoForPeriod(PhoneNumber number, DateTime start, DateTime end)
         {
             return _repositiryOfBillingInfo.Where(x => x.Source == number && x.Started >= start && x.Ended <= end).OrderBy(y => y.Started).ToList();
+        }
+
+        public ICollection<BillingInfo> GetCallInfoForPeriodOrderedByPrice(PhoneNumber number, DateTime start, DateTime end)
+        {
+            return _repositiryOfBillingInfo.Where(x => x.Source == number && x.Started >= start && x.Ended <= end).OrderBy(y => y.Cost).ToList();
+        }
+
+        public ICollection<BillingInfo> GetCallInfoForPeriodOrderedByTarget(PhoneNumber number, DateTime start, DateTime end)
+        {
+            return _repositiryOfBillingInfo.Where(x => x.Source == number && x.Started >= start && x.Ended <= end).OrderBy(y => y.Target).ToList();
         }
 
         public void RegisterEventHandlersForStation(IStation station)

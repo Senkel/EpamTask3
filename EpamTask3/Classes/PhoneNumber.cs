@@ -6,15 +6,15 @@ using System.Threading.Tasks;
 
 namespace EpamTask3.Classes
 {
-   public struct PhoneNumber: IEquatable<PhoneNumber>
+    public struct PhoneNumber : IEquatable<PhoneNumber>
     {
         private string _phoneNumber;
 
         public string Phone { get { return _phoneNumber; } }
-        
+
         public PhoneNumber(string phoneNumber)
         {
-           _phoneNumber = phoneNumber;
+            _phoneNumber = phoneNumber;
         }
 
         public override string ToString()

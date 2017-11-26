@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace EpamTask3.Interfaces
 {
-    interface IPort:IClearEventHandlers
+   public interface IPort:IClearEventHandlers
     {
-         PortCondition Condition { get; set; }
+       PortCondition Condition { get; set; }
 
         event EventHandler<PortCondition> ConditionChanging;
         event EventHandler<PortCondition> ConditionChanged;

@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace EpamTask3.Classes
 {
-    class Respond
+    public class Respond
     {
-        public IncomingCalls Request;
+        public Calls Request;
 
         public PhoneNumber Source { get; set; }
 

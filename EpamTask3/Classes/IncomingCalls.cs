@@ -6,5 +6,5 @@ using System.Threading.Tasks;
 
 namespace EpamTask3.Classes
 {
-    class IncomingCalls : Calls { }
+   public class IncomingCalls : Calls { }
 }

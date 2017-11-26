@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace EpamTask3.Classes
 {
-    class Calls
+    public abstract class Calls
     {
         public PhoneNumber Source { get; set; }
     }

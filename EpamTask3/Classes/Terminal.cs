@@ -32,7 +32,7 @@ namespace EpamTask3.Classes
         {
             if (!IsOnline && IncomingCall != null)
             {
-                OnIncomingRespond(this, new Respond() { Source = Number, Condition = RespondCondition.Accept, Request = (IncomingCalls)IncomingCall });
+                OnIncomingRespond(this, new Respond() { Source = Number, Condition = RespondCondition.Accept, Request = IncomingCall });
                 OnOnline(this, null);
             }
         }
@@ -41,7 +41,8 @@ namespace EpamTask3.Classes
         {
             if (IncomingCall != null)
             {
-                OnIncomingRespond(this, new Respond() { Source = Number, Condition = RespondCondition.Reset });
+                OnIncomingRespond(this, new Respond() { Source = Number, Condition = RespondCondition.Reset, Request = IncomingCall });
+
                 if (IsOnline)
                 {
                     OnOffline(this, null);
@@ -52,9 +53,10 @@ namespace EpamTask3.Classes
         private void OnOnline(object sender, EventArgs args)
         {
             Online?.Invoke(sender, args);
+            IsOnline = true;
         }
 
-        private void OnIncomingRespond(object sender, Respond respond)
+        protected virtual void OnIncomingRespond(object sender, Respond respond)
         {
             if (IncomingRespond != null && IncomingCall != null)
                 IncomingRespond(sender, respond);
@@ -89,11 +91,7 @@ namespace EpamTask3.Classes
 
         public void Unplug()
         {
-            if (IsOnline)
-            {
-                Drop();
-                OnUnPlugging(this, null);
-            }
+            OnUnPlugging(this, null);
         }
 
         public void Call(PhoneNumber target)
@@ -105,11 +103,11 @@ namespace EpamTask3.Classes
             }
         }
 
-        protected virtual void OnOutgoingCall(object sender, PhoneNumber target)
+        protected void OnOutgoingCall(object sender, PhoneNumber target)
         {
             if (OutgoingConnection != null)
             {
-                IncomingCall = new OutGoingCalls() { Source = this.Number, Target = target };
+                IncomingCall = new OutGoingCalls() { Source = Number, Target = target };
                 OutgoingConnection(sender, IncomingCall);
             }
         }
@@ -125,7 +123,7 @@ namespace EpamTask3.Classes
             };
         }
 
-        protected virtual void OnOffline(object sender, EventArgs args)
+        protected void OnOffline(object sender, EventArgs args)
         {
             if (Offline != null)
             {
@@ -135,7 +133,7 @@ namespace EpamTask3.Classes
             IsOnline = false;
         }
 
-        protected virtual void OnIncomingRequest(object sender, IncomingCalls request)
+        protected void OnIncomingRequest(object sender, IncomingCalls request)
         {
             IncomingRequest?.Invoke(sender, request);
             IncomingCall = request;

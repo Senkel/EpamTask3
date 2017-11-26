@@ -15,7 +15,7 @@ namespace EpamTask3.Interfaces
 
         event EventHandler<CallInfo> NewCallInfo;
 
-        event EventHandler<ITerminal> TerminalRegistered;
+      //  event EventHandler<ITerminal> TerminalRegistered;
 
         void RegisterEventHandlersForBilling(Billing billing);
     }

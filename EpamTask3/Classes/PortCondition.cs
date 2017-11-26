@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace EpamTask3.Classes
 {
-    enum PortCondition
+    public enum PortCondition
     {
         Free, Busy, Unplagged
     }

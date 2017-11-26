@@ -37,7 +37,8 @@ namespace EpamTask3.Classes
 
         public void RegisterOutgoingRequest(OutGoingCalls outGoingCalls)
         {
-            if (outGoingCalls.Target != default(PhoneNumber) && outGoingCalls.Source != default(PhoneNumber) && (GetCallInfo(outGoingCalls.Source) == null && GetConnectionInfo(outGoingCalls.Source) == null))
+            if (outGoingCalls.Target != default(PhoneNumber) && outGoingCalls.Source != default(PhoneNumber) 
+                &&  GetConnectionInfo(outGoingCalls.Source) == null)
             {
                 var time = DateTime.Now;
                 var callinfo = new CallInfo()
@@ -81,7 +82,7 @@ namespace EpamTask3.Classes
                 MapTerminalToPort(terminal, portFree);
                 RegisterEventHandlersForPort(portFree);
                 RegisterEventHandlersForTerminal(terminal);
-                OnTerminalRegistered(this, terminal);
+                //OnTerminalRegistered(this, terminal);
             }
 
         }
@@ -95,12 +96,12 @@ namespace EpamTask3.Classes
 
         public event EventHandler<CallInfo> NewCallInfo;//  when the station creates a new CallInfo for billing 
 
-        public event EventHandler<ITerminal> TerminalRegistered;
+        //public event EventHandler<ITerminal> TerminalRegistered;
 
-        protected virtual void OnTerminalRegistered(object sender, ITerminal terminal)
-        {
-            TerminalRegistered?.Invoke(sender, terminal);
-        }
+        //protected virtual void OnTerminalRegistered(object sender, ITerminal terminal)
+        //{
+        //    TerminalRegistered?.Invoke(sender, terminal);
+        //}
 
         protected virtual void OnNewCallInfo(object sender, CallInfo callInfo)
         {
@@ -144,11 +145,6 @@ namespace EpamTask3.Classes
             return _callCollection.FirstOrDefault(x => (x.Source.Phone == number.Phone || x.Target.Phone == number.Phone));
         }
 
-        protected CallInfo GetCallInfo(PhoneNumber num)
-        {
-            return _callCollection.FirstOrDefault(x => (x.Source.Phone == num.Phone || x.Target.Phone == num.Phone));
-        }
-
         public void OnIncomingCallRespond(object sender, Respond respond)
         {
             var registeredCallInfo = GetConnectionInfo(respond.Source);
@@ -170,7 +166,7 @@ namespace EpamTask3.Classes
             }
             else
             {
-                CallInfo currentCallInfo = GetCallInfo(respond.Source);
+                CallInfo currentCallInfo = GetConnectionInfo(respond.Source);
                 if (currentCallInfo != null)
                 {
                     InterruptConnection(currentCallInfo);

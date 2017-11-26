@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace EpamTask3.Interfaces
 {
-    interface ITerminal:IClearEventHandlers
+    public interface ITerminal:IClearEventHandlers
     {
         event EventHandler Online; // when terminal is going to call mode
 

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace EpamTask3.Interfaces
 {
-    interface IClearEventHandlers
+   public interface IClearEventHandlers
     {
         void ClearEvents();
     }

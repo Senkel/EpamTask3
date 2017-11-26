@@ -28,13 +28,13 @@ namespace EpamTask3.MTS
             billing.TerminalRegistered += (sender, terminal) => { Add(terminal); };
         }
 
-        
+
 
         public override void RegisterEventHandlersForPort(IPort port)
         {
             port.ConditionChanged += (sender, condition) => { Console.WriteLine("Station detected the port changed its State to {0}", condition); };
         }
-        
+
 
         public override void RegisterEventHandlersForTerminal(ITerminal terminal)
         {
